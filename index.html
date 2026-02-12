@@ -5,29 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>联系我</title>
     <style>
-        /* --- 美化部分开始 --- */
+        /* --- 核心样式修改区 --- */
         
-        /* 1. 整体背景：高级渐变色， flex布局实现完美居中 */
+        /* 1. 整体背景：使用深海星空图 */
         body {
             margin: 0;
             height: 100vh; /* 占满全屏高度 */
             display: flex;
             justify-content: center; /* 水平居中 */
             align-items: center; /* 垂直居中 */
-            /* 这是一个蓝紫调的柔和渐变背景 */
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            /* 设置背景图片地址 */
+            background-image: url('https://i.ibb.co/Xk3gZq0/image-24.png');
+            /* 让背景图居中、不重复、覆盖全屏 */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            /* 防止背景图滚动 */
+            background-attachment: fixed;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         /* 2. 卡片容器：白底、大圆角、柔和阴影 */
         .card {
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 24px; /* 更大的圆角，更有现代感 */
-            /* 立体感的阴影 */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9); /* 稍微带点透明度，让背景透一点出来 */
+            padding: 40px; /* 增加内边距，让内容更舒展 */
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* 加深阴影，更立体 */
             text-align: center;
-            max-width: 90%; /* 手机上防止太宽 */
+            max-width: 85%;
+            /* 关键：用 Flex 布局保证卡片内部内容绝对居中 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         /* 3. 文字标题样式 */
@@ -35,26 +45,28 @@
             margin-top: 0;
             color: #333;
             font-weight: 600;
-            font-size: 20px;
+            font-size: 22px;
+            margin-bottom: 15px;
         }
 
         p.hint {
-            color: #888;
+            color: #666;
             font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
-        /* 4. 图片样式 */
+        /* 4. 图片样式：绝对居中 */
         img {
             width: 260px; /* 固定大小 */
             height: 260px;
-            object-fit: cover; /* 防止图片变形 */
-            border-radius: 16px; /* 图片也加个小圆角 */
-            border: 2px solid #f0f0f0; /* 加个细边框更精致 */
+            object-fit: cover; /* 防止变形 */
+            border-radius: 16px;
+            border: 3px solid #fff; /* 加个白边框更突出 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* 图片也加个小阴影 */
             display: block; /* 修复底部缝隙 */
-            margin: 0 auto; /* 确保图片在卡片里居中 */
+            /* 由于卡片已经是flex居中了，这里不需要额外的居中代码 */
         }
-        /* --- 美化部分结束 --- */
+        /* --- 样式修改结束 --- */
     </style>
 </head>
 <body>
@@ -70,10 +82,6 @@
         // ==================================================
         // 核心配置区：这里直接写你上传的文件名
         // ==================================================
-        // 注意：
-        // 1. 文件名两边要有英文引号 ""
-        // 2. 文件名之间用逗号 , 隔开
-        // 3. 确保你上传的文件名和这里写的一模一样（区分大小写！）
         const qrCodes = [
             "1.jpg",
             "2.jpg",
@@ -85,19 +93,10 @@
         // 逻辑代码（无需修改）
         // ==================================================
         function showRandomQR() {
-            // 安全检查：防止没写图片导致报错
-            if (qrCodes.length === 0) {
-                console.error("请先在代码中配置图片文件名！");
-                return;
-            }
-            
+            if (qrCodes.length === 0) return;
             const imgElement = document.getElementById('qr-image');
-            // 随机选取一个索引
             const randomIndex = Math.floor(Math.random() * qrCodes.length);
-            // 设置图片路径
             imgElement.src = qrCodes[randomIndex];
-            
-            console.log("已加载第 " + (randomIndex + 1) + " 张图片：" + qrCodes[randomIndex]);
         }
 
         // 页面加载完成后立即执行
