@@ -1,17 +1,107 @@
-<script>
-    // --- 核心配置：直接引用你上传到 GitHub 仓库里的图片名字 ---
-    // 只要图片和这个 index.html 在同一个文件夹下，这样写是最稳的
-    const qrCodes = [
-        "1.jpg",
-        "2.jpg",
-        "3.jpg",
-        "4.jpg"
-    ];
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我</title>
+    <style>
+        /* --- 美化部分开始 --- */
+        
+        /* 1. 整体背景：高级渐变色， flex布局实现完美居中 */
+        body {
+            margin: 0;
+            height: 100vh; /* 占满全屏高度 */
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            /* 这是一个蓝紫调的柔和渐变背景 */
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-    function showRandomQR() {
-        const imgElement = document.getElementById('qr-image');
-        const randomIndex = Math.floor(Math.random() * qrCodes.length);
-        imgElement.src = qrCodes[randomIndex];
-    }
-    window.onload = showRandomQR;
-</script>
+        /* 2. 卡片容器：白底、大圆角、柔和阴影 */
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 24px; /* 更大的圆角，更有现代感 */
+            /* 立体感的阴影 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 90%; /* 手机上防止太宽 */
+        }
+
+        /* 3. 文字标题样式 */
+        h2 {
+            margin-top: 0;
+            color: #333;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        p.hint {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* 4. 图片样式 */
+        img {
+            width: 260px; /* 固定大小 */
+            height: 260px;
+            object-fit: cover; /* 防止图片变形 */
+            border-radius: 16px; /* 图片也加个小圆角 */
+            border: 2px solid #f0f0f0; /* 加个细边框更精致 */
+            display: block; /* 修复底部缝隙 */
+            margin: 0 auto; /* 确保图片在卡片里居中 */
+        }
+        /* --- 美化部分结束 --- */
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>长按识别二维码</h2>
+        <p class="hint">（系统随机分配，每次刷新自动切换）</p>
+        
+        <img id="qr-image" src="" alt="正在加载二维码...">
+    </div>
+
+    <script>
+        // ==================================================
+        // 核心配置区：这里直接写你上传的文件名
+        // ==================================================
+        // 注意：
+        // 1. 文件名两边要有英文引号 ""
+        // 2. 文件名之间用逗号 , 隔开
+        // 3. 确保你上传的文件名和这里写的一模一样（区分大小写！）
+        const qrCodes = [
+            "1.jpg",
+            "2.jpg",
+            "3.jpg",
+            "4.jpg"
+        ];
+
+        // ==================================================
+        // 逻辑代码（无需修改）
+        // ==================================================
+        function showRandomQR() {
+            // 安全检查：防止没写图片导致报错
+            if (qrCodes.length === 0) {
+                console.error("请先在代码中配置图片文件名！");
+                return;
+            }
+            
+            const imgElement = document.getElementById('qr-image');
+            // 随机选取一个索引
+            const randomIndex = Math.floor(Math.random() * qrCodes.length);
+            // 设置图片路径
+            imgElement.src = qrCodes[randomIndex];
+            
+            console.log("已加载第 " + (randomIndex + 1) + " 张图片：" + qrCodes[randomIndex]);
+        }
+
+        // 页面加载完成后立即执行
+        window.onload = showRandomQR;
+    </script>
+</body>
+</html>
