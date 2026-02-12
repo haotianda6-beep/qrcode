@@ -3,105 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>联系我</title>
+    <title>添加联系方式</title>
     <style>
-        /* --- 核心样式修改区 --- */
-        
-        /* 1. 整体背景：使用深海星空图 */
         body {
             margin: 0;
-            height: 100vh; /* 占满全屏高度 */
+            height: 100vh;
             display: flex;
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            /* 设置背景图片地址 */
-            background-image: url('https://i.ibb.co/Xk3gZq0/image-24.png');
-            /* 让背景图居中、不重复、覆盖全屏 */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            /* 防止背景图滚动 */
-            background-attachment: fixed;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        /* 2. 卡片容器：白底、大圆角、柔和阴影 */
-        .card {
-            background: rgba(255, 255, 255, 0.9); /* 稍微带点透明度，让背景透一点出来 */
-            padding: 40px; /* 增加内边距，让内容更舒展 */
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* 加深阴影，更立体 */
-            text-align: center;
-            max-width: 85%;
-            /* 关键：用 Flex 布局保证卡片内部内容绝对居中 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            /* 直接使用你上传到 GitHub 的 bg.jpg，再也不会报错 */
+            background: url('bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: sans-serif;
         }
 
-        /* 3. 文字标题样式 */
-        h2 {
-            margin-top: 0;
-            color: #333;
-            font-weight: 600;
-            font-size: 22px;
-            margin-bottom: 15px;
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
         }
 
-        p.hint {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 30px;
+        /* 二维码容器：只显示二维码，不留多余边距 */
+        .qr-wrapper {
+            width: 280px;
+            height: 280px;
+            overflow: hidden; /* 强制裁剪多余部分 */
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
         }
 
-        /* 4. 图片样式：绝对居中 */
         img {
-            width: 260px; /* 固定大小 */
-            height: 260px;
-            object-fit: cover; /* 防止变形 */
-            border-radius: 16px;
-            border: 3px solid #fff; /* 加个白边框更突出 */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* 图片也加个小阴影 */
-            display: block; /* 修复底部缝隙 */
-            /* 由于卡片已经是flex居中了，这里不需要额外的居中代码 */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 自动填充并修剪，只显示中心部分 */
+            display: block;
         }
-        /* --- 样式修改结束 --- */
+
+        .text {
+            margin-top: 15px;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h2>长按识别二维码</h2>
-        <p class="hint">（系统随机分配，每次刷新自动切换）</p>
-        
-        <img id="qr-image" src="" alt="正在加载二维码...">
+        <div class="qr-wrapper">
+            <img id="qr-image" src="" alt="加载中...">
+        </div>
+        <div class="text">长按识别二维码</div>
     </div>
 
     <script>
-        // ==================================================
-        // 核心配置区：这里直接写你上传的文件名
-        // ==================================================
-        const qrCodes = [
-            "1.png",
-            "2.png",
-            "3.png",
-            "4.png"
-        ];
-
-        // ==================================================
-        // 逻辑代码（无需修改）
-        // ==================================================
+        const qrCodes = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
+        
         function showRandomQR() {
-            if (qrCodes.length === 0) return;
             const imgElement = document.getElementById('qr-image');
             const randomIndex = Math.floor(Math.random() * qrCodes.length);
-            imgElement.src = qrCodes[randomIndex];
+            // 加上时间戳，防止浏览器因为缓存不刷新图片
+            imgElement.src = qrCodes[randomIndex] + "?t=" + new Date().getTime();
         }
 
-        // 页面加载完成后立即执行
         window.onload = showRandomQR;
     </script>
 </body>
 </html>
-
